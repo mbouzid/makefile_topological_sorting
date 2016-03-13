@@ -51,12 +51,10 @@ extern std::string out ;
 makefile: rules makefile {;}
 	| {;}
 	;
-rules: rule BREAK_RULE cmds 
-	{ 
-		d.display();
-	}
+rules: rule BREAK_RULE cmds {;}
 	| BREAK_RULE 
 	{ 
+		d.display();
 		directed_graph<int>::topological_sorting(d) ; 
 	}
    ; 
