@@ -1,0 +1,14 @@
+all: tp3
+	@echo "Building complete."
+
+tp3: moc_draw_area.o main.o 
+	g++ -o tp3 moc_draw_area.o main.o -lQtCore -lQtGui
+
+main.o: main.cpp
+	g++ -c -Wall -I/usr/include/qt4 -o main.o main.cpp
+
+moc_draw_area.o: moc_draw_area.cpp
+	g++ -c -Wall -I/usr/include/qt4 -o moc_draw_area.o moc_draw_area.cpp
+
+moc_draw_area.cpp: draw_area.hpp
+	moc -I/usr/include/qt4 -o moc_draw_area.cpp draw_area.hpp
