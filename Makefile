@@ -5,28 +5,40 @@ YFLAGS		= -d
 CXX		= g++
 LINK		= g++
 STD		= -std=c++11
+INC		= -I/usr/include/qt4 -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtCore
+LIB		= -lQtGui -lQtCore
 #### Files
-SOURCES		= parser.cpp scanner.cpp main.cpp
-OBJECTS		= parser.o scanner.o main.o
+SOURCES		= 	parser.cpp \
+			scanner.cpp \
+			main.cpp
+				
+OBJECTS		= objects/parser.o \
+			  objects/scanner.o \
+			  objects/main.o
+			  
 TARGET		= parser
-EXT			= strfun.o vertex.o arc.o directed_graph.o 
+
+EXT			= 	topological_sorting/objects/strfun.o \
+				topological_sorting/objects/vertex.o \
+				topological_sorting/objects/arc.o \
+				topological_sorting/objects/directed_graph.o 
 #### Building rules
 all: $(TARGET) clean
 	@echo "Building complete"
 
 #### Linking
 $(TARGET): $(OBJECTS) $(EXT)
-	$(LINK)  -o $(TARGET) $(OBJECTS) $(EXT)
+	$(LINK) -o $(TARGET) $(OBJECTS) $(EXT) $(LIB)
 
 #### G++ Compiling
-parser.o: parser.cpp
-	$(CXX) -c  $(STD) parser.cpp -o parser.o
+objects/parser.o: parser.cpp
+	$(CXX) -c  $(STD) parser.cpp -o objects/parser.o
 
-scanner.o: scanner.cpp
-	$(CXX) -c $(STD) scanner.cpp -o scanner.o
+objects/scanner.o: scanner.cpp
+	$(CXX) -c $(STD) scanner.cpp -o objects/scanner.o
 
-main.o: main.cpp
-	$(CXX) -c $(STD) main.cpp -o main.o
+objects/main.o: main.cpp
+	$(CXX) -c $(INC) $(STD) main.cpp -o objects/main.o
 
 #### YACC routine
 parser.cpp: parser.y
@@ -37,6 +49,5 @@ scanner.cpp: scanner.l
 	$(LEX) $(LFLAGS) -oscanner.cpp scanner.l
 
 #### Cleaning routine
-clean: $(OBJECTS)
+clean: $(OBJECTS) 
 	rm $(OBJECTS)
-
