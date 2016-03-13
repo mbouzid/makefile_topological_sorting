@@ -12,3 +12,4 @@ moc_draw_area.o: moc_draw_area.cpp
 
 moc_draw_area.cpp: draw_area.hpp
 	moc -I/usr/include/qt4 -o moc_draw_area.cpp draw_area.hpp
+
