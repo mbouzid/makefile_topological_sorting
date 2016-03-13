@@ -18,7 +18,7 @@
 #include <string>
 
 
-#include "../topological_sorting/src/directed_graph.hpp"
+#include "directed_graph.hpp"
 using namespace std;
 
 extern directed_graph<int> d ; 
