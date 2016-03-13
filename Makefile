@@ -9,8 +9,7 @@ STD			= -std=c++11
 SOURCES		= parser.cpp scanner.cpp main.cpp
 OBJECTS		= parser.o scanner.o main.o
 TARGET		= parser
-EXT			= ../topological_sorting/objects/strfun.o ../topological_sorting/objects/vertex.o ../topological_sorting/objects/arc.o \
-			../topological_sorting/objects/directed_graph.o 
+EXT			= strfun.o vertex.o arc.o directed_graph.o 
 #### Building rules
 all: $(TARGET) clean
 	@echo "Building complete"
