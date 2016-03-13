@@ -31,6 +31,18 @@ $(TARGET): $(OBJECTS) $(EXT)
 	$(LINK) -o $(TARGET) $(OBJECTS) $(EXT) $(LIB)
 
 #### G++ Compiling
+topological_sorting/objects/strfun.o: topological_sorting/src/strfun.cpp
+	$(CXX) -c $(STD) topological_sorting/src/strfun.cpp -o topological_sorting/objects/strfun.o
+
+topological_sorting/objects/vertex.o: topological_sorting/src/vertex.cpp
+	$(CXX) -c $(STD) topological_sorting/src/vertex.cpp -o topological_sorting/objects/vertex.o
+
+topological_sorting/objects/arc.o: topological_sorting/src/arc.cpp
+	$(CXX) -c $(STD) topological_sorting/src/arc.cpp -o topological_sorting/objects/arc.o
+
+topological_sorting/objects/directed_graph.o: topological_sorting/src/directed_graph.cpp
+	$(CXX) -c $(STD) topological_sorting/src/directed_graph.cpp -o topological_sorting/objects/directed_graph.o
+
 objects/parser.o: parser.cpp
 	$(CXX) -c  $(STD) parser.cpp -o objects/parser.o
 
