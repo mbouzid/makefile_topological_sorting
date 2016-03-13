@@ -5,7 +5,7 @@ using namespace std;
 #include <set>
 #include <string>
 
-#include "../topological_sorting/src/directed_graph.hpp"
+#include "directed_graph.hpp"
 
 directed_graph<int> d;
  
