@@ -1,12 +1,15 @@
 %name Parser
 %define LSP_NEEDED
+%define CONSTRUCTOR_PARAM istream* file
+%define CONSTRUCTOR_INIT : lexer(file)
+%define CONSTRUCTOR_CODE { yyparse() ;}
 %define MEMBERS                 \
     virtual ~Parser()   {} \
     private:                   \
        yyFlexLexer lexer;
 %define LEX_BODY {return lexer.yylex();}
 
-%define ERROR_BODY {cerr << "error encountered at line: "<<lexer.lineno()<<" last word parsed:"<<lexer.YYText()<<"\n";}
+%define ERROR_BODY { cerr << "error encountered at line: "<<lexer.lineno()<<" last word parsed:"<<lexer.YYText()<<"\n";}
 
 
 %header{
@@ -18,7 +21,7 @@
 #include <string>
 
 
-#include "directed_graph.hpp"
+#include "topological_sorting/src/directed_graph.hpp"
 using namespace std;
 
 extern directed_graph<int> d ; 
@@ -39,19 +42,23 @@ extern std::string out ;
 %type <s_type> text
 %token <s_type> BREAK_RULE
 %token <s_type> START_CMD
-%type <s_type> every
+%type <s_type> makefile
 %type <s_type> dependences
 %type <s_type> cmds
-%start every
+%start makefile
 
 %%
-every: all every {;}
+makefile: rules makefile {;}
 	| {;}
 	;
-all: rule BREAK_RULE cmds { 
-							d.display();
-						}
-	| BREAK_RULE { directed_graph<int>::topological_sorting(d) ; }
+rules: rule BREAK_RULE cmds 
+	{ 
+		d.display();
+	}
+	| BREAK_RULE 
+	{ 
+		directed_graph<int>::topological_sorting(d) ; 
+	}
    ; 
 cmds: cmd cmds  {;}
 	| BREAK_RULE {;}
@@ -59,13 +66,23 @@ cmds: cmd cmds  {;}
 dependences: dependence dependences {;}
 	| {;}
 	;
-target: TARGET { $$ = lexer.YYText() ; 
-				 in = std::string($$) ; d.add_vertex(in.erase(in.length()-1,1)) ;}
+target: TARGET 
+		{ 
+			$$ = lexer.YYText() ; 
+			in = std::string($$) ; 
+			d.add_vertex(in.erase(in.length()-1,1)) ;
+		}
 
     ;
-dependence: TEXT { $$ = lexer.YYText() ;  out =std::string($$)  ; d.add_vertex(out) ;  d.add_arc(arc<int>(out,in,1)); }
+dependence: TEXT 
+			{ 
+				$$ = lexer.YYText() ;  
+				out =std::string($$)  ; 
+				d.add_vertex(out) ;  
+				d.add_arc(arc<int>(out,in,1)); 
+			}
 	;
-rule: target dependences {  }
+rule: target dependences {;}
 	;
 cmd: START_CMD text BREAK_RULE {;}
 	;
