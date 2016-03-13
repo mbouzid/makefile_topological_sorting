@@ -1,10 +1,10 @@
-LEX			= flex++
+LEX		= flex++
 LFLAGS		= -d 
 YACC		= bison++
 YFLAGS		= -d
-CXX			= g++
+CXX		= g++
 LINK		= g++
-STD			= -std=c++11
+STD		= -std=c++11
 #### Files
 SOURCES		= parser.cpp scanner.cpp main.cpp
 OBJECTS		= parser.o scanner.o main.o
